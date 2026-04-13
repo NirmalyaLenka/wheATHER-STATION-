@@ -19,6 +19,7 @@ Read **Temperature**, **Pressure**, and **Altitude** using a BMP180 barometric s
 ---
 
 ##  Wiring Diagram
+<img width="415" height="289" alt="image" src="https://github.com/user-attachments/assets/61369da9-a946-417a-bdaf-d1a35f013e7a" />
 
 ```
 BMP180          ESP32
@@ -29,11 +30,11 @@ SDA    ──────►  GPIO 21
 SCL    ──────►  GPIO 22
 ```
 
->  **Important:** Use **3.3V** only! The BMP180 is NOT 5V tolerant.
+>  **Important:** Use **3.3V** only! The BMP180 is NOT 5V swittable.
 
 ---
 
-## 🛠️ Setup & Installation
+##  Setup & Installation
 
 ### 1. Install Arduino IDE
 Download from [arduino.cc](https://www.arduino.cc/en/software)
