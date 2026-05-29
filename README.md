@@ -130,3 +130,4 @@ This project is open source and available under the [MIT License](LICENSE).
 ##  Contributing
 
 Pull requests are welcome! Feel free to open an issue for bugs or feature requests.
+any type of queries please contact carmodbhai@gmail.com
