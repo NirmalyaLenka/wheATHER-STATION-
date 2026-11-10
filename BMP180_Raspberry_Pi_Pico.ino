@@ -26,7 +26,9 @@ void setup() {
   Serial.println("=================================");
 
   // Initialize I2C for Raspberry Pi Pico
-  Wire.setSDA(4);\n  Wire.setSCL(5);\n  Wire.begin();
+  Wire.setSDA(4);  // GP4 = SDA
+  Wire.setSCL(5);  // GP5 = SCL
+  Wire.begin();
 
   if (!bmp.begin()) {
     Serial.println("ERROR: BMP180 sensor not found!");
