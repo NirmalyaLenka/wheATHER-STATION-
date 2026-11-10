@@ -2,7 +2,7 @@
  * BMP180 Sensor Firmware for Arduino Mega 2560
  * Reads Temperature, Pressure, and Altitude
  * * Wiring for Arduino Mega 2560:
- * BMP180 VCC  -> 5V
+ * BMP180 VCC  -> 3.3V (use a 3.3V-compatible breakout)
  * BMP180 GND  -> GND
  * BMP180 SDA  -> Pin 20
  * BMP180 SCL  -> Pin 21
