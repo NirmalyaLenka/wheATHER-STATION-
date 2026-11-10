@@ -2,7 +2,7 @@
  * BMP180 Sensor Firmware for Arduino Leonardo
  * Reads Temperature, Pressure, and Altitude
  * * Wiring for Arduino Leonardo:
- * BMP180 VCC  -> 5V
+ * BMP180 VCC  -> 3.3V (use a 3.3V-compatible breakout)
  * BMP180 GND  -> GND
  * BMP180 SDA  -> Pin 2
  * BMP180 SCL  -> Pin 3
