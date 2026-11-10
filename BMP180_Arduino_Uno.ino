@@ -2,7 +2,7 @@
  * BMP180 Sensor Firmware for Arduino Uno
  * Reads Temperature, Pressure, and Altitude
  * * Wiring for Arduino Uno:
- * BMP180 VCC  -> 5V or 3.3V
+ * BMP180 VCC  -> 3.3V (use a 3.3V-compatible breakout)
  * BMP180 GND  -> GND
  * BMP180 SDA  -> A4
  * BMP180 SCL  -> A5
