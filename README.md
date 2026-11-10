@@ -136,6 +136,16 @@ any type of queries please contact carmodbhai@gmail.com
 
 ---
 
+## Skills & technologies
+
+[![C++](https://img.shields.io/badge/C%2B%2B-cpp?logo=C%2B%2B&logoColor=white)](https://github.com/NirmalyaLenka/wheATHER-STATION-) · [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://github.com/NirmalyaLenka/wheATHER-STATION-)
+
+
+## How it works
+
+The firmware entry point is `BMP180_Arduino_Leonardo.ino`. Open the sketch in Arduino IDE, select the matching board and serial port, verify the pin mapping and required libraries, then compile and upload. Hardware behaviour must be validated on the actual board; a README alone does not prove the circuit is safe or working.
+
+
 ## Maintenance & Audit
 
 - **Audit date:** 10 November 2026
