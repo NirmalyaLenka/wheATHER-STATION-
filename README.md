@@ -1,155 +1,107 @@
-# wheATHER-STATION-
-A beginner-friendly Arduino project for the ESP32 that interfaces with the BMP180 barometric pressure sensor via I2C. Outputs live temperature (°C/°F), atmospheric pressure (Pa/hPa), and altitude (meters) to the Serial Monitor every 2 seconds. Includes full wiring guide, library setup, and troubleshooting tipS.
+# BMP180 Weather Sensor Examples
 
-# ESP32 + BMP180 Sensor 
+Arduino examples for reading temperature, barometric pressure, and estimated altitude from a BMP180 sensor over I2C. The repository contains separate sketches for several boards plus a React/TSX reference interface.
 
-Read **Temperature**, **Pressure**, and **Altitude** using a BMP180 barometric sensor with an ESP32 microcontroller.
+> These are learning examples, not a calibrated weather station. Pressure-based altitude is an estimate, not a GPS measurement.
 
----
+## Electrical safety
 
-##  Components Required
+The BMP180 sensor itself is a 3.3 V device. Use a breakout only according to its documented voltage and logic-level specifications.
 
-| Component | Quantity |
-|-----------|----------|
-| ESP32 Dev Board | 1 |
-| BMP180 Sensor Module | 1 |
-| Jumper Wires | 4 |
-| Breadboard (optional) | 1 |
+- Prefer **3.3 V VCC** unless the exact breakout explicitly supports regulated 5 V input.
+- Connect GND to GND, SDA to SDA, and SCL to SCL.
+- For 5 V logic boards such as classic Uno, Leonardo, and Mega 2560, use a bidirectional I2C level shifter unless the breakout explicitly includes suitable level shifting.
+- Do not assume a breakout is 5 V tolerant based on appearance alone.
 
----
+## Bill of materials
 
-##  Wiring Diagram
-<img width="415" height="289" alt="image" src="https://github.com/user-attachments/assets/61369da9-a946-417a-bdaf-d1a35f013e7a" />
+| Item | Qty. | Notes |
+| --- | ---: | --- |
+| BMP180 sensor/breakout | 1 | Check supply and logic-level specifications |
+| Supported development board | 1 | Select one firmware target below |
+| Jumper wires | 4+ | VCC, GND, SDA, SCL |
+| Breadboard | 1, optional | For prototyping |
+| USB cable / board power | 1 | Upload and serial monitoring |
+| Bidirectional I2C level shifter | As required | Needed for 5 V logic if the breakout lacks level shifting |
 
-```
-BMP180          ESP32
-------          -----
-VCC    ──────►  3.3V
-GND    ──────►  GND
-SDA    ──────►  GPIO 21
-SCL    ──────►  GPIO 22
-```
+This is a basic single-sensor prototype BOM. It excludes enclosure, display, logging, calibration equipment, and weatherproofing.
 
->  **Important:** Use **3.3V** only! The BMP180 is NOT 5V swittable.
+## Firmware examples
 
----
+Install the **Adafruit BMP085 Library** from Arduino Library Manager. It supports BMP085/BMP180 devices; Wire is supplied by the board core.
 
-##  Setup & Installation
+| File | Target | I2C mapping |
+| --- | --- | --- |
+| `bmp180_esp32.ino` | ESP32 | SDA GPIO 21, SCL GPIO 22 |
+| `BMP180_ESP32_C3.ino` | ESP32-C3 | SDA GPIO 5, SCL GPIO 6 |
+| `BMP180_ESP8266_NodeMCU.ino` | ESP8266 NodeMCU | SDA D2/GPIO 4, SCL D1/GPIO 5 |
+| `BMP180_Arduino_Uno.ino` | Arduino Uno | SDA A4, SCL A5 |
+| `BMP180_Arduino_Leonardo.ino` | Arduino Leonardo | Board hardware I2C pins |
+| `BMP180_Arduino_Mega2560.ino` | Arduino Mega 2560 | SDA pin 20, SCL pin 21 |
+| `BMP180_Raspberry_Pi_Pico.ino` | Raspberry Pi Pico with Arduino-compatible core | SDA GP4, SCL GP5 |
+| `BMP180_STM32_BluePill.ino` | STM32 Blue Pill | Default I2C pins for the selected core |
+| `BMP180_Seeeduino_XIAO.ino` | Seeeduino XIAO | Board default SDA/SCL |
+| `BMP180_Teensy_40.ino` | Teensy 4.0 | SDA pin 18, SCL pin 19 |
 
-### 1. Install Arduino IDE
-Download from [arduino.cc](https://www.arduino.cc/en/software)
+These are separate alternatives, not one combined sketch. Install the correct board package, open the matching file, select the board and port, then compile and upload. Board-core APIs and pin defaults can vary by version, so confirm them against the target board documentation.
 
-### 2. Add ESP32 Board Support
-1. Open **Arduino IDE** → **File** → **Preferences**
-2. Add this URL to *Additional Boards Manager URLs*:
-   ```
-   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-   ```
-3. Go to **Tools** → **Board** → **Boards Manager**
-4. Search for `esp32` and click **Install**
+## Setup
 
-### 3. Install Required Library
-1. Go to **Sketch** → **Include Library** → **Manage Libraries**
-2. Search for `Adafruit BMP085`
-3. Install **"Adafruit BMP085 Library"** by Adafruit
+1. Install the [Arduino IDE](https://www.arduino.cc/en/software).
+2. Install the board support package for your target.
+3. Install **Adafruit BMP085 Library** using Library Manager.
+4. Wire the sensor safely and confirm the pin mapping.
+5. Open the matching `.ino` file, select the board and port, then compile and upload.
+6. Set Serial Monitor to the baud rate used by the sketch's `Serial.begin(...)` call (most examples use 115200).
 
-### 4. Upload the Sketch
-1. Open `bmp180_esp32.ino` in Arduino IDE
-2. Select your board: **Tools** → **Board** → **ESP32 Dev Module**
-3. Select the correct **Port** under **Tools** → **Port**
-4. Click **Upload** ⬆️
+The ESP32 sketch uses `#define SEA_LEVEL_PRESSURE_HPA 1013.25`. Adjust this reference value for a better local altitude estimate; the default is not a local calibration.
 
----
+## Repository structure
 
-##  Serial Monitor Output
-
-Open Serial Monitor at **115200 baud** to see live readings:
-
-```
-=================================
-  ESP32 + BMP180 Sensor Demo     
-=================================
-BMP180 initialized successfully!
----------------------------------
---- Sensor Readings ---
-Temperature : 28.40 °C  |  83.12 °F
-Pressure    : 101325 Pa  |  1013.25 hPa
-Altitude    : 0.00 m
------------------------
+```text
+wheATHER-STATION-/
+├── bmp180_esp32.ino                 # Main ESP32 example
+├── BMP180_ESP32_C3.ino              # ESP32-C3 variant
+├── BMP180_ESP8266_NodeMCU.ino       # ESP8266 / NodeMCU variant
+├── BMP180_Arduino_Uno.ino           # Arduino Uno variant
+├── BMP180_Arduino_Leonardo.ino      # Arduino Leonardo variant
+├── BMP180_Arduino_Mega2560.ino      # Arduino Mega 2560 variant
+├── BMP180_Raspberry_Pi_Pico.ino     # Pico with Arduino-compatible core
+├── BMP180_STM32_BluePill.ino        # STM32 Blue Pill variant
+├── BMP180_Seeeduino_XIAO.ino        # Seeeduino XIAO variant
+├── BMP180_Teensy_40.ino             # Teensy 4.0 variant
+├── BMP180.pdf                       # BMP180 reference document
+├── bmp180_boards.tsx                # React/TSX board selector and code-view component
+└── README.md                        # Setup, wiring, BOM, and maintenance
 ```
 
----
+The sketches remain at the root to preserve the existing direct-open workflow. If moved into folders later, each Arduino sketch should be placed in a directory matching its primary .ino filename.
 
-##  Configuration
+### About `bmp180_boards.tsx`
 
-You can adjust the sea level pressure in the code for more accurate altitude readings based on your location:
+This is a React component, not a standalone website or Arduino sketch. It requires a compatible React/TypeScript host project. Some embedded snippets are illustrative and may not exactly match the standalone firmware files; treat the board-specific `.ino` files as the source of truth.
 
-```cpp
-#define SEA_LEVEL_PRESSURE_HPA 1013.25  // Change this for your location
-```
+## Troubleshooting
 
-You can find your local sea level pressure from a weather website.
+| Symptom | Check |
+| --- | --- |
+| Sensor not detected | VCC/GND, SDA/SCL, board pin mapping, I2C logic levels |
+| No serial output | Correct port and matching baud rate |
+| Implausible altitude | Sea-level pressure setting; altitude is approximate |
+| Compile failure | Correct board core and support for the sketch's I2C API |
 
----
+## Review findings
 
-##  Troubleshooting
+This source review found and corrected two issues: malformed literal `\\n` sequences in the Pico sketch's I2C initialization, and misleading 5 V VCC comments in the Uno, Leonardo, and Mega examples. These source-level changes have **not** been compiled or tested on physical boards.
 
-| Problem | Solution |
-|--------|----------|
-| `BMP180 sensor not found!` | Check wiring — make sure SDA is on GPIO 21 and SCL on GPIO 22 |
-| Garbage in Serial Monitor | Set baud rate to **115200** |
-| Wrong altitude reading | Adjust `SEA_LEVEL_PRESSURE_HPA` to your local value |
-| Board not detected | Install CP210x or CH340 USB driver for your ESP32 board |
+## Skills and technologies
 
----
+`Embedded C++` · `Arduino IDE` · `I2C` · `BMP180` · `ESP32` · `ESP8266` · `Sensor interfacing`
 
-##  Project Structure
+## Maintenance & audit
 
-```
-esp32-bmp180/
-│
-├── bmp180_esp32.ino   # Main Arduino sketch
-└── README.md          # This file
-```
-
----
-
-##  Libraries Used
-
-- [Adafruit BMP085 Library](https://github.com/adafruit/Adafruit-BMP085-Library) — supports BMP085 and BMP180
-- [Wire](https://www.arduino.cc/reference/en/language/functions/communication/wire/) — built-in I2C library
-
----
-
-##  License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-##  Contributing
-
-Pull requests are welcome! Feel free to open an issue for bugs or feature requests.
-any type of queries please contact carmodbhai@gmail.com
-## if the code not work please contact me it means a lot for me 
-
-
----
-
-## Skills & technologies
-
-[![C++](https://img.shields.io/badge/C%2B%2B-cpp?logo=C%2B%2B&logoColor=white)](https://github.com/NirmalyaLenka/wheATHER-STATION-) · [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://github.com/NirmalyaLenka/wheATHER-STATION-)
-
-
-## How it works
-
-The firmware entry point is `BMP180_Arduino_Leonardo.ino`. Open the sketch in Arduino IDE, select the matching board and serial port, verify the pin mapping and required libraries, then compile and upload. Hardware behaviour must be validated on the actual board; a README alone does not prove the circuit is safe or working.
-
-
-## Maintenance & Audit
-
-- **Audit date:** 10 November 2026
-- **Documentation status:** README reviewed and audit record added on this date.
-- **Scope and evidence:** This entry records a documentation-level maintenance pass. It does not by itself establish that source code compiles, dependencies are current, security has been tested, or hardware/runtime behavior has been verified.
-- **Code and tests:** No new functional code changes or test results are claimed by this README update. Run the project-specific build, test, and hardware/runtime checks before relying on it.
-- **Maintenance baseline:** Documentation status recorded through 10 November 2026; revisit dependencies, setup instructions, known limitations, and tests whenever the project changes.
+- **Last updated:** 10 November 2026
+- **Review scope:** Firmware paths, board mappings, electrical cautions, setup instructions, BOM, and repository structure.
+- **Firmware changes:** Repaired the Pico I2C initialization text and clarified 3.3 V sensor supply guidance for Uno, Leonardo, and Mega examples.
+- **Validation boundary:** No compiler, hardware, or calibration test was run. The review does not establish that every board variant builds or works.
+- **License:** No `LICENSE` file was present in the root listing; add one if a specific reuse license is intended.
