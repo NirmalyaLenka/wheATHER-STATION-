@@ -100,7 +100,7 @@ This source review found and corrected two issues: malformed literal `\\n` seque
 
 ## Maintenance & audit
 
-- **Last updated:** 10 November 2026
+- **Last updated:** 11 November 2026
 - **Review scope:** Firmware paths, board mappings, electrical cautions, setup instructions, BOM, and repository structure.
 - **Firmware changes:** Repaired the Pico I2C initialization text and clarified 3.3 V sensor supply guidance for Uno, Leonardo, and Mega examples.
 - **Validation boundary:** No compiler, hardware, or calibration test was run. The review does not establish that every board variant builds or works.
