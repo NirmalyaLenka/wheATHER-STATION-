@@ -90,7 +90,7 @@ This is a React component, not a standalone website or Arduino sketch. It requir
 | Implausible altitude | Sea-level pressure setting; altitude is approximate |
 | Compile failure | Correct board core and support for the sketch's I2C API |
 
-## Review findings
+## Findings from the 11 November source review
 
 This source review found and corrected two issues: malformed literal `\\n` sequences in the Pico sketch's I2C initialization, and misleading 5 V VCC comments in the Uno, Leonardo, and Mega examples. These source-level changes have **not** been compiled or tested on physical boards.
 
@@ -102,6 +102,7 @@ This source review found and corrected two issues: malformed literal `\\n` seque
 
 - **Last updated:** 14 November 2026
 - **Review scope:** Firmware paths, board mappings, electrical cautions, setup instructions, BOM, and repository structure.
-- **Firmware changes:** Repaired the Pico I2C initialization text and clarified 3.3 V sensor supply guidance for Uno, Leonardo, and Mega examples.
+- **Prior firmware changes (11 November 2026):** Repaired the Pico I2C initialization text and clarified 3.3 V sensor supply guidance for Uno, Leonardo, and Mega examples.
+- **Current review (14 November 2026):** README-only update documenting the `readAltitude()` pressure-unit mismatch; no firmware was edited.
 - **Validation boundary:** No compiler, hardware, or calibration test was run. The review does not establish that every board variant builds or works.
 - **License:** No `LICENSE` file was present in the root listing; add one if a specific reuse license is intended.
