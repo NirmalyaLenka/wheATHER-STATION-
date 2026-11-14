@@ -54,7 +54,7 @@ These are separate alternatives, not one combined sketch. Install the correct bo
 5. Open the matching `.ino` file, select the board and port, then compile and upload.
 6. Set Serial Monitor to the baud rate used by the sketch's `Serial.begin(...)` call (most examples use 115200).
 
-The ESP32 sketch uses `#define SEA_LEVEL_PRESSURE_HPA 1013.25`. Adjust this reference value for a better local altitude estimate; the default is not a local calibration.
+**Known altitude-calculation issue:** The sketches currently define `SEA_LEVEL_PRESSURE_HPA` as `1013.25` and pass it directly to `bmp.readAltitude(...)`. The [Adafruit BMP085 API](https://adafruit.github.io/Adafruit-BMP085-Library/html/class_adafruit___b_m_p085.html) expects the sea-level pressure argument in pascals (for example, `101325` Pa for `1013.25` hPa). As written, the altitude output is not trustworthy until the firmware converts hPa to Pa or uses a pascal-valued constant. The firmware was not changed in this documentation-only pass. After correcting the unit mismatch, use a suitable local sea-level pressure value for a better estimate; altitude remains pressure-derived, not GPS.
 
 ## Repository structure
 
